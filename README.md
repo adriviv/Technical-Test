@@ -28,7 +28,7 @@ We negotiated the prices with our cleaning partner:
 - a checkout checkin costs 10€ per room
 - a last checkout costs 5€ per room
 
-Here is the content you have to copy on your file `seed.rb` located in `./db/seeds.rb` 
+Here is the content you have to copy on your file `seed.rb` located in `./db/seeds.rb`
 ```
 Booking.delete_all
 Reservation.delete_all
