@@ -47,7 +47,7 @@ Reservation.create!(listing_id: Listing.second.id, start_date: "2016-10-15".to_d
 
 You need to create a Rails Application using Active records which has:
  - JSON API:
-   - CRUD on `listing`
+   - CRUD (INDEX/ SH0W/ CREATE/ UPDATE / DELETE ) on `listing`
    - Index endpoint to revrieve missions created
 
 Note: no authentication is required
