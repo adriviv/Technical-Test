@@ -2,6 +2,9 @@
 
 We are building a listing rentals management company; let’s call it HostnDrive ;)
 
+Create a new rails app. 
+
+
 4 main objects populate our app:
 - `listings`: apartments of our clients
 - `bookings`: periods of time during which our clients leave us their apartment
