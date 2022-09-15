@@ -14,5 +14,3 @@ Things you may want to cover:
 * Database creation : run "rails db:migrate"
 
 * Database initialization : run "rails db:seed"
-
-* How to run the test suite
