@@ -277,3 +277,13 @@ app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol lit
 app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
 app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
 app/controllers/api/v1/missions_controller.rb:1:in `<main>'
+Started GET "/api/missions" for ::1 at 2022-09-15 14:46:42 +0200
+  
+NameError (uninitialized constant ActionController::Api
+
+class Api::BaseController < ActionController::Api
+                                            ^^^^^
+Did you mean?  ActionController::API):
+  
+app/controllers/api/base_controller.rb:1:in `<main>'
+app/controllers/api/missions_controller.rb:1:in `<main>'
