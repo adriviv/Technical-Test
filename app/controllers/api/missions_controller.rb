@@ -10,6 +10,6 @@ class Api::MissionsController < Api::BaseController
       mission = Mission.where(listing_id: reservation.listing_id, date: reservation.end_date)
       Mission.create!(listing_id: reservation.listing_id, mission_type: 'checkout_checkin', date: reservation.end_date, price: 10) if mission.nil?
     end
-  @missions = Mission.all
+    @missions = Mission.all
   end
 end

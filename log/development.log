@@ -287,3 +287,141 @@ Did you mean?  ActionController::API):
   
 app/controllers/api/base_controller.rb:1:in `<main>'
 app/controllers/api/missions_controller.rb:1:in `<main>'
+Started GET "/api/listings" for ::1 at 2022-09-15 14:53:25 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/listings"):
+  
+Started GET "/" for ::1 at 2022-09-15 14:54:32 +0200
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/jubaultsara/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/railties-7.0.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/jubaultsara/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/railties-7.0.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.5ms | Allocations: 301)
+Completed 200 OK in 7ms (Views: 3.3ms | Allocations: 1230)
+
+
+Started GET "/api/listings" for ::1 at 2022-09-15 14:54:39 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/listings"):
+  
+Started GET "/api/listing" for ::1 at 2022-09-15 14:55:20 +0200
+  
+ActionController::RoutingError (uninitialized constant Api::ListingController
+
+      Object.const_get(camel_cased_word)
+            ^^^^^^^^^^
+Did you mean?  Api::ListingsController
+
+            raise MissingController.new(error.message, error.name)
+            ^^^^^):
+  
+Started GET "/api/listings" for ::1 at 2022-09-15 14:55:25 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/listings"):
+  
+Started GET "/api/listing/1" for ::1 at 2022-09-15 14:55:56 +0200
+  
+ActionController::RoutingError (uninitialized constant Api::ListingController
+
+      Object.const_get(camel_cased_word)
+            ^^^^^^^^^^
+Did you mean?  Api::ListingsController
+
+            raise MissingController.new(error.message, error.name)
+            ^^^^^):
+  
+Started GET "/api/listing/" for ::1 at 2022-09-15 14:58:30 +0200
+  
+ActionController::RoutingError (uninitialized constant Api::ListingController
+
+      Object.const_get(camel_cased_word)
+            ^^^^^^^^^^
+Did you mean?  Api::ListingsController
+
+            raise MissingController.new(error.message, error.name)
+            ^^^^^):
+  
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:01:06 +0200
+  
+NameError (uninitialized constant ActionController::Api
+
+class Api::BaseController < ActionController::Api
+                                            ^^^^^
+Did you mean?  ActionController::API):
+  
+app/controllers/api/base_controller.rb:1:in `<main>'
+app/controllers/api/listing_controller.rb:1:in `<main>'
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:01:34 +0200
+  
+ArgumentError (wrong number of arguments (given 2, expected 1)):
+  
+app/controllers/api/listing_controller.rb:2:in `<class:ListingController>'
+app/controllers/api/listing_controller.rb:1:in `<main>'
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:02:59 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 15ms (Allocations: 2953)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:07 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 4ms (Allocations: 1927)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:08 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 0ms (Allocations: 94)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:09 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 0ms (Allocations: 93)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:20 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 1ms (Allocations: 89)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:26 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 1ms (Allocations: 89)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:33 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 0ms (Allocations: 89)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:43 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 1ms (Allocations: 89)
+
+
+Started GET "/api/listings" for ::1 at 2022-09-15 15:05:01 +0200
+Processing by Api::ListingsController#index as JSON
+  Rendering api/listings/index.json.jbuilder
+  [1m[36mListing Load (0.3ms)[0m  [1m[34mSELECT "listings".* FROM "listings"[0m
+  ↳ app/views/api/listings/index.json.jbuilder:1
+  Rendered api/listings/index.json.jbuilder (Duration: 11.1ms | Allocations: 5045)
+Completed 200 OK in 19ms (Views: 12.4ms | ActiveRecord: 1.3ms | Allocations: 7540)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:05:11 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (1.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.9ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.4ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.1ms | Allocations: 836)
+Completed 200 OK in 91ms (Views: 3.5ms | ActiveRecord: 4.3ms | Allocations: 11524)
+
+
