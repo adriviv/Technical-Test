@@ -1,4 +1,4 @@
-class MissionController < ApplicationController
+class Api::MissionsController < Api::BaseController
   def index
     Booking.all.each do |booking|
       mission = Mission.where(listing_id: booking.listing_id, mission_type: 'first_checkin', date: booking.start_date)
