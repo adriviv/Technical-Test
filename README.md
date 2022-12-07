@@ -1,6 +1,6 @@
 # Backend test
 
-We are building a listing rentals management company; let’s call it HostnDrive ;)
+We are building a listing rentals management company
 
 Create a new rails app. 
 
