@@ -1,0 +1,2135 @@
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateListings (20220915091829)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "listings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "num_rooms" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915091829"]]
+  [1m[36mTRANSACTION (2.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateBookings (20220915092138)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "bookings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "listing_id" integer NOT NULL, "start_date" date, "end_date" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_a6b33036fa"
+FOREIGN KEY ("listing_id")
+  REFERENCES "listings" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_bookings_on_listing_id" ON "bookings" ("listing_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915092138"]]
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateReservations (20220915092319)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "reservations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "listing_id" integer NOT NULL, "start_date" date, "end_date" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_6d899b98d1"
+FOREIGN KEY ("listing_id")
+  REFERENCES "listings" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_reservations_on_listing_id" ON "reservations" ("listing_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915092319"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateMissions (20220915092457)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "missions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "listing_id" integer NOT NULL, "first_checkin" date, "last_checkout" date, "checkout_checkin" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_b0a9f91daa"
+FOREIGN KEY ("listing_id")
+  REFERENCES "listings" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_missions_on_listing_id" ON "missions" ("listing_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915092457"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddPriceToMissions (20220915092756)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[35mALTER TABLE "missions" ADD "price" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915092756"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2022-09-15 09:28:56.456158"], ["updated_at", "2022-09-15 09:28:56.456158"]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddPriceToMissions (20220915092756)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amissions" ("id" integer NOT NULL PRIMARY KEY, "listing_id" integer NOT NULL, "first_checkin" date DEFAULT NULL, "last_checkout" date DEFAULT NULL, "checkout_checkin" date DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "price" integer DEFAULT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "tindex_amissions_on_listing_id" ON "amissions" ("listing_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "amissions" ("id","listing_id","first_checkin","last_checkout","checkout_checkin","created_at","updated_at","price")
+                     SELECT "id","listing_id","first_checkin","last_checkout","checkout_checkin","created_at","updated_at","price" FROM "missions"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mDROP TABLE "missions"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "missions" ("id" integer NOT NULL PRIMARY KEY, "listing_id" integer NOT NULL, "first_checkin" date DEFAULT NULL, "last_checkout" date DEFAULT NULL, "checkout_checkin" date DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_b0a9f91daa"
+FOREIGN KEY ("listing_id")
+  REFERENCES "listings" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_missions_on_listing_id" ON "missions" ("listing_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "missions" ("id","listing_id","first_checkin","last_checkout","checkout_checkin","created_at","updated_at")
+                     SELECT "id","listing_id","first_checkin","last_checkout","checkout_checkin","created_at","updated_at" FROM "amissions"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amissions"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Delete All (0.2ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20220915092756"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateMissions (20220915092457)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "missions"[0m
+  [1m[36mActiveRecord::SchemaMigration Delete All (0.2ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20220915092457"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateMissions (20220915095422)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "missions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "listing_id" integer NOT NULL, "price" integer, "mission_type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_b0a9f91daa"
+FOREIGN KEY ("listing_id")
+  REFERENCES "listings" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_missions_on_listing_id" ON "missions" ("listing_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915095422"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddDateToMission (20220915102641)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "mission" ADD "date" date[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddDateToMission (20220915102641)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "missions" ADD "date" date[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915102641"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (0.4ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (0.3ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.3ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (0.3ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.9ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 11:01:50.427723"], ["updated_at", "2022-09-15 11:01:50.427723"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 11:01:50.433581"], ["updated_at", "2022-09-15 11:01:50.433581"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 11:01:50.437423"], ["updated_at", "2022-09-15 11:01:50.437423"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.3ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.6ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 11:01:50.475274"], ["updated_at", "2022-09-15 11:01:50.475274"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 11:01:50.482436"], ["updated_at", "2022-09-15 11:01:50.482436"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 2], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 11:01:50.489753"], ["updated_at", "2022-09-15 11:01:50.489753"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReservation Create (1.0ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 11:01:50.499797"], ["updated_at", "2022-09-15 11:01:50.499797"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 11:01:50.507028"], ["updated_at", "2022-09-15 11:01:50.507028"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 11:01:50.514048"], ["updated_at", "2022-09-15 11:01:50.514048"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 2], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 11:01:50.520832"], ["updated_at", "2022-09-15 11:01:50.520832"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  [1m[36mBooking Load (0.5ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings" ORDER BY "bookings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/api/v1/missions" for ::1 at 2022-09-15 14:10:05 +0200
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+SyntaxError (/Users/jubaultsara/code/YannDLB/Technical-Test-Le-Wagon/app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+...n :verify_policy_scoped, only :index
+...                              ^
+):
+  
+app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+app/controllers/api/v1/missions_controller.rb:1:in `<main>'
+Started GET "/api/v1/listings" for ::1 at 2022-09-15 14:10:25 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/listings"):
+  
+Started GET "/api/v1/listings" for ::1 at 2022-09-15 14:10:34 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/listings"):
+  
+Started GET "/api/v1/listings" for ::1 at 2022-09-15 14:12:34 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/listings"):
+  
+Started GET "/api/v1/listings" for ::1 at 2022-09-15 14:13:05 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/listings"):
+  
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (3.7ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (1.8ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.1ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (1.1ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.5ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 12:13:27.010566"], ["updated_at", "2022-09-15 12:13:27.010566"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 12:13:27.015906"], ["updated_at", "2022-09-15 12:13:27.015906"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 12:13:27.019940"], ["updated_at", "2022-09-15 12:13:27.019940"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 12:13:27.057075"], ["updated_at", "2022-09-15 12:13:27.057075"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 12:13:27.064010"], ["updated_at", "2022-09-15 12:13:27.064010"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.5ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 5], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 12:13:27.071314"], ["updated_at", "2022-09-15 12:13:27.071314"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 12:13:27.082100"], ["updated_at", "2022-09-15 12:13:27.082100"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 12:13:27.089261"], ["updated_at", "2022-09-15 12:13:27.089261"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 12:13:27.096556"], ["updated_at", "2022-09-15 12:13:27.096556"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.4ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.5ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 5], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 12:13:27.103816"], ["updated_at", "2022-09-15 12:13:27.103816"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/v1/listings" for ::1 at 2022-09-15 14:13:29 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/listings"):
+  
+Started GET "/api/v1/listings/index" for ::1 at 2022-09-15 14:15:16 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/listings/index"):
+  
+Started GET "/api/v1/listings/index" for ::1 at 2022-09-15 14:19:37 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/listings/index"):
+  
+Started GET "/api/v1/missions" for ::1 at 2022-09-15 14:20:19 +0200
+  
+SyntaxError (/Users/jubaultsara/code/YannDLB/Technical-Test-Le-Wagon/app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+...n :verify_policy_scoped, only :index
+...                              ^
+):
+  
+app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+app/controllers/api/v1/missions_controller.rb:1:in `<main>'
+Started GET "/api/v1/missions" for ::1 at 2022-09-15 14:26:47 +0200
+  
+SyntaxError (/Users/jubaultsara/code/YannDLB/Technical-Test-Le-Wagon/app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+...n :verify_policy_scoped, only :index
+...                              ^
+):
+  
+app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+app/controllers/api/v1/base_controller.rb:3: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+app/controllers/api/v1/missions_controller.rb:1:in `<main>'
+Started GET "/api/missions" for ::1 at 2022-09-15 14:46:42 +0200
+  
+NameError (uninitialized constant ActionController::Api
+
+class Api::BaseController < ActionController::Api
+                                            ^^^^^
+Did you mean?  ActionController::API):
+  
+app/controllers/api/base_controller.rb:1:in `<main>'
+app/controllers/api/missions_controller.rb:1:in `<main>'
+Started GET "/api/listings" for ::1 at 2022-09-15 14:53:25 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/listings"):
+  
+Started GET "/" for ::1 at 2022-09-15 14:54:32 +0200
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/jubaultsara/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/railties-7.0.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/jubaultsara/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/railties-7.0.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.5ms | Allocations: 301)
+Completed 200 OK in 7ms (Views: 3.3ms | Allocations: 1230)
+
+
+Started GET "/api/listings" for ::1 at 2022-09-15 14:54:39 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/listings"):
+  
+Started GET "/api/listing" for ::1 at 2022-09-15 14:55:20 +0200
+  
+ActionController::RoutingError (uninitialized constant Api::ListingController
+
+      Object.const_get(camel_cased_word)
+            ^^^^^^^^^^
+Did you mean?  Api::ListingsController
+
+            raise MissingController.new(error.message, error.name)
+            ^^^^^):
+  
+Started GET "/api/listings" for ::1 at 2022-09-15 14:55:25 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/api/listings"):
+  
+Started GET "/api/listing/1" for ::1 at 2022-09-15 14:55:56 +0200
+  
+ActionController::RoutingError (uninitialized constant Api::ListingController
+
+      Object.const_get(camel_cased_word)
+            ^^^^^^^^^^
+Did you mean?  Api::ListingsController
+
+            raise MissingController.new(error.message, error.name)
+            ^^^^^):
+  
+Started GET "/api/listing/" for ::1 at 2022-09-15 14:58:30 +0200
+  
+ActionController::RoutingError (uninitialized constant Api::ListingController
+
+      Object.const_get(camel_cased_word)
+            ^^^^^^^^^^
+Did you mean?  Api::ListingsController
+
+            raise MissingController.new(error.message, error.name)
+            ^^^^^):
+  
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:01:06 +0200
+  
+NameError (uninitialized constant ActionController::Api
+
+class Api::BaseController < ActionController::Api
+                                            ^^^^^
+Did you mean?  ActionController::API):
+  
+app/controllers/api/base_controller.rb:1:in `<main>'
+app/controllers/api/listing_controller.rb:1:in `<main>'
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:01:34 +0200
+  
+ArgumentError (wrong number of arguments (given 2, expected 1)):
+  
+app/controllers/api/listing_controller.rb:2:in `<class:ListingController>'
+app/controllers/api/listing_controller.rb:1:in `<main>'
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:02:59 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 15ms (Allocations: 2953)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:07 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 4ms (Allocations: 1927)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:08 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 0ms (Allocations: 94)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:09 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 0ms (Allocations: 93)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:20 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 1ms (Allocations: 89)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:26 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 1ms (Allocations: 89)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:33 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 0ms (Allocations: 89)
+
+
+Started GET "/api/listing/" for ::1 at 2022-09-15 15:03:43 +0200
+Processing by Api::ListingController#index as JSON
+No template found for Api::ListingController#index, rendering head :no_content
+Completed 204 No Content in 1ms (Allocations: 89)
+
+
+Started GET "/api/listings" for ::1 at 2022-09-15 15:05:01 +0200
+Processing by Api::ListingsController#index as JSON
+  Rendering api/listings/index.json.jbuilder
+  [1m[36mListing Load (0.3ms)[0m  [1m[34mSELECT "listings".* FROM "listings"[0m
+  ↳ app/views/api/listings/index.json.jbuilder:1
+  Rendered api/listings/index.json.jbuilder (Duration: 11.1ms | Allocations: 5045)
+Completed 200 OK in 19ms (Views: 12.4ms | ActiveRecord: 1.3ms | Allocations: 7540)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:05:11 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (1.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.9ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.4ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.1ms | Allocations: 836)
+Completed 200 OK in 91ms (Views: 3.5ms | ActiveRecord: 4.3ms | Allocations: 11524)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:06:54 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.6ms | Allocations: 743)
+Completed 200 OK in 23ms (Views: 2.6ms | ActiveRecord: 2.5ms | Allocations: 9935)
+
+
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (1.6ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (1.3ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.1ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (1.1ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.7ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 13:07:04.623963"], ["updated_at", "2022-09-15 13:07:04.623963"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 13:07:04.629123"], ["updated_at", "2022-09-15 13:07:04.629123"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 13:07:04.632908"], ["updated_at", "2022-09-15 13:07:04.632908"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:07:04.668099"], ["updated_at", "2022-09-15 13:07:04.668099"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:07:04.674972"], ["updated_at", "2022-09-15 13:07:04.674972"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 8], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:07:04.682424"], ["updated_at", "2022-09-15 13:07:04.682424"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.6ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 13:07:04.693513"], ["updated_at", "2022-09-15 13:07:04.693513"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:07:04.700668"], ["updated_at", "2022-09-15 13:07:04.700668"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:07:04.707727"], ["updated_at", "2022-09-15 13:07:04.707727"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 8], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 13:07:04.714445"], ["updated_at", "2022-09-15 13:07:04.714445"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/missions" for ::1 at 2022-09-15 15:07:09 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.3ms | ActiveRecord: 0.4ms | Allocations: 2530)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:07:12 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 0.9ms | Allocations: 555)
+Completed 200 OK in 5ms (Views: 1.2ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (2.2ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (1.2ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.1ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (1.1ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 13:09:43.411203"], ["updated_at", "2022-09-15 13:09:43.411203"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 13:09:43.416803"], ["updated_at", "2022-09-15 13:09:43.416803"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 13:09:43.420978"], ["updated_at", "2022-09-15 13:09:43.420978"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:09:43.453889"], ["updated_at", "2022-09-15 13:09:43.453889"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:09:43.460484"], ["updated_at", "2022-09-15 13:09:43.460484"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 11], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:09:43.467645"], ["updated_at", "2022-09-15 13:09:43.467645"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.5ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 13:09:43.477554"], ["updated_at", "2022-09-15 13:09:43.477554"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.5ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:09:43.485281"], ["updated_at", "2022-09-15 13:09:43.485281"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:09:43.492000"], ["updated_at", "2022-09-15 13:09:43.492000"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 11], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 13:09:43.498921"], ["updated_at", "2022-09-15 13:09:43.498921"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:48 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 743)
+Completed 200 OK in 24ms (Views: 2.3ms | ActiveRecord: 2.4ms | Allocations: 9925)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:50 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.3ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 5.4ms | Allocations: 555)
+Completed 200 OK in 11ms (Views: 5.7ms | ActiveRecord: 0.5ms | Allocations: 2531)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:51 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.3ms | Allocations: 555)
+Completed 200 OK in 7ms (Views: 1.8ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:52 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 555)
+Completed 200 OK in 8ms (Views: 1.8ms | ActiveRecord: 0.5ms | Allocations: 2491)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:52 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 0.8ms | Allocations: 555)
+Completed 200 OK in 5ms (Views: 1.1ms | ActiveRecord: 0.3ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:52 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.5ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.9ms | Allocations: 555)
+Completed 200 OK in 12ms (Views: 2.5ms | ActiveRecord: 0.8ms | Allocations: 2544)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:52 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (10.9ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.9ms | Allocations: 555)
+Completed 200 OK in 21ms (Views: 2.2ms | ActiveRecord: 11.3ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:52 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.5ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.0ms | Allocations: 555)
+Completed 200 OK in 12ms (Views: 2.3ms | ActiveRecord: 0.8ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:52 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.9ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 555)
+Completed 200 OK in 14ms (Views: 2.1ms | ActiveRecord: 1.2ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:53 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 7ms (Views: 1.5ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:53 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.3ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 4.5ms | Allocations: 555)
+Completed 200 OK in 14ms (Views: 5.1ms | ActiveRecord: 0.6ms | Allocations: 2482)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:53 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.5ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 5.3ms | Allocations: 555)
+Completed 200 OK in 14ms (Views: 6.3ms | ActiveRecord: 0.8ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:53 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 6.2ms | Allocations: 555)
+Completed 200 OK in 10ms (Views: 6.5ms | ActiveRecord: 0.3ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:53 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.3ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 8.2ms | Allocations: 555)
+Completed 200 OK in 32ms (Views: 8.5ms | ActiveRecord: 0.7ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:53 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.6ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.2ms | Allocations: 555)
+Completed 200 OK in 10ms (Views: 1.4ms | ActiveRecord: 0.8ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:54 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 0.9ms | Allocations: 555)
+Completed 200 OK in 4ms (Views: 1.1ms | ActiveRecord: 0.3ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:09:54 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.5ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 4.6ms | Allocations: 555)
+Completed 200 OK in 21ms (Views: 5.6ms | ActiveRecord: 0.9ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:03 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.3ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.9ms | Allocations: 743)
+Completed 200 OK in 23ms (Views: 2.6ms | ActiveRecord: 2.9ms | Allocations: 9991)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:04 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.6ms | Allocations: 555)
+Completed 200 OK in 9ms (Views: 2.0ms | ActiveRecord: 0.4ms | Allocations: 2538)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:05 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.1ms | Allocations: 555)
+Completed 200 OK in 7ms (Views: 1.4ms | ActiveRecord: 0.5ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:05 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.4ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.6ms | Allocations: 555)
+Completed 200 OK in 8ms (Views: 2.8ms | ActiveRecord: 0.7ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:06 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.6ms | Allocations: 555)
+Completed 200 OK in 8ms (Views: 2.1ms | ActiveRecord: 0.5ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:06 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.3ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.7ms | Allocations: 555)
+Completed 200 OK in 11ms (Views: 2.1ms | ActiveRecord: 0.5ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:06 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.6ms | Allocations: 555)
+Completed 200 OK in 11ms (Views: 2.4ms | ActiveRecord: 0.6ms | Allocations: 2482)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:06 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.3ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.5ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 0.9ms | Allocations: 555)
+Completed 200 OK in 10ms (Views: 1.1ms | ActiveRecord: 0.8ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:06 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 3.9ms | Allocations: 555)
+Completed 200 OK in 11ms (Views: 5.3ms | ActiveRecord: 0.6ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:07 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.7ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 555)
+Completed 200 OK in 12ms (Views: 1.8ms | ActiveRecord: 1.0ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:07 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.3ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.1ms | Allocations: 555)
+Completed 200 OK in 11ms (Views: 2.6ms | ActiveRecord: 0.7ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:07 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.3ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.5ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 3.1ms | Allocations: 555)
+Completed 200 OK in 24ms (Views: 3.5ms | ActiveRecord: 1.1ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:07 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.4ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.7ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 555)
+Completed 200 OK in 10ms (Views: 2.2ms | ActiveRecord: 1.3ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:07 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.5ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.3ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 555)
+Completed 200 OK in 10ms (Views: 2.0ms | ActiveRecord: 0.9ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:07 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 3.7ms | Allocations: 555)
+Completed 200 OK in 10ms (Views: 4.5ms | ActiveRecord: 0.5ms | Allocations: 2482)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:08 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.3ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.3ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 8.3ms | Allocations: 672)
+Completed 200 OK in 35ms (Views: 25.4ms | ActiveRecord: 0.7ms | Allocations: 2634)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:08 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.1ms | Allocations: 555)
+Completed 200 OK in 9ms (Views: 1.4ms | ActiveRecord: 0.6ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:10 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.2ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.5ms | ActiveRecord: 0.4ms | Allocations: 2482)
+
+
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (1.5ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (1.1ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.1ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (1.1ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.5ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 13:10:19.690286"], ["updated_at", "2022-09-15 13:10:19.690286"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 13:10:19.695907"], ["updated_at", "2022-09-15 13:10:19.695907"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 13:10:19.700153"], ["updated_at", "2022-09-15 13:10:19.700153"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:10:19.736939"], ["updated_at", "2022-09-15 13:10:19.736939"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:10:19.743947"], ["updated_at", "2022-09-15 13:10:19.743947"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 14], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:10:19.761046"], ["updated_at", "2022-09-15 13:10:19.761046"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 13:10:19.773827"], ["updated_at", "2022-09-15 13:10:19.773827"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:10:19.780748"], ["updated_at", "2022-09-15 13:10:19.780748"]]
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:10:19.788620"], ["updated_at", "2022-09-15 13:10:19.788620"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 14], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 13:10:19.795513"], ["updated_at", "2022-09-15 13:10:19.795513"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:26 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.6ms | Allocations: 743)
+Completed 200 OK in 25ms (Views: 4.0ms | ActiveRecord: 2.6ms | Allocations: 9991)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:27 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.3ms | ActiveRecord: 0.3ms | Allocations: 2530)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:27 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.2ms | Allocations: 555)
+Completed 200 OK in 7ms (Views: 1.6ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:28 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.3ms | ActiveRecord: 0.3ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:10:28 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.3ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/listings" for ::1 at 2022-09-15 15:10:31 +0200
+Processing by Api::ListingsController#index as JSON
+  Rendering api/listings/index.json.jbuilder
+  [1m[36mListing Load (0.3ms)[0m  [1m[34mSELECT "listings".* FROM "listings"[0m
+  ↳ app/views/api/listings/index.json.jbuilder:1
+  Rendered api/listings/index.json.jbuilder (Duration: 34.5ms | Allocations: 2309)
+Completed 200 OK in 47ms (Views: 36.8ms | ActiveRecord: 3.1ms | Allocations: 4374)
+
+
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateListings (20220915091829)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "listings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "num_rooms" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915091829"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateBookings (20220915092138)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "bookings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "listing_id" integer NOT NULL, "start_date" date, "end_date" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_a6b33036fa"
+FOREIGN KEY ("listing_id")
+  REFERENCES "listings" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_bookings_on_listing_id" ON "bookings" ("listing_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915092138"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateReservations (20220915092319)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "reservations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "listing_id" integer NOT NULL, "start_date" date, "end_date" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_6d899b98d1"
+FOREIGN KEY ("listing_id")
+  REFERENCES "listings" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_reservations_on_listing_id" ON "reservations" ("listing_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915092319"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateMissions (20220915095422)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "missions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "listing_id" integer NOT NULL, "price" integer, "mission_type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_b0a9f91daa"
+FOREIGN KEY ("listing_id")
+  REFERENCES "listings" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_missions_on_listing_id" ON "missions" ("listing_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915095422"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddDateToMission (20220915102641)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "missions" ADD "date" date[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220915102641"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2022-09-15 13:13:48.232332"], ["updated_at", "2022-09-15 13:13:48.232332"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (0.1ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.1ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (0.1ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.6ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 13:13:54.696583"], ["updated_at", "2022-09-15 13:13:54.696583"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 13:13:54.701768"], ["updated_at", "2022-09-15 13:13:54.701768"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 13:13:54.705541"], ["updated_at", "2022-09-15 13:13:54.705541"]]
+  [1m[36mTRANSACTION (15.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:13:54.741543"], ["updated_at", "2022-09-15 13:13:54.741543"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.5ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:13:54.748465"], ["updated_at", "2022-09-15 13:13:54.748465"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 2], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:13:54.756459"], ["updated_at", "2022-09-15 13:13:54.756459"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 13:13:54.766436"], ["updated_at", "2022-09-15 13:13:54.766436"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:13:54.773287"], ["updated_at", "2022-09-15 13:13:54.773287"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.6ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 1], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:13:54.781857"], ["updated_at", "2022-09-15 13:13:54.781857"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 2], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 13:13:54.789720"], ["updated_at", "2022-09-15 13:13:54.789720"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/missions" for ::1 at 2022-09-15 15:14:02 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 743)
+Completed 200 OK in 23ms (Views: 2.2ms | ActiveRecord: 2.4ms | Allocations: 9951)
+
+
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (1.2ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (1.1ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.2ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (1.0ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 13:16:38.071003"], ["updated_at", "2022-09-15 13:16:38.071003"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 13:16:38.075934"], ["updated_at", "2022-09-15 13:16:38.075934"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 13:16:38.079779"], ["updated_at", "2022-09-15 13:16:38.079779"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:16:38.114009"], ["updated_at", "2022-09-15 13:16:38.114009"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:16:38.120602"], ["updated_at", "2022-09-15 13:16:38.120602"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 5], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:16:38.128281"], ["updated_at", "2022-09-15 13:16:38.128281"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 13:16:38.138420"], ["updated_at", "2022-09-15 13:16:38.138420"]]
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.3ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:16:38.145424"], ["updated_at", "2022-09-15 13:16:38.145424"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.5ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 4], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:16:38.151959"], ["updated_at", "2022-09-15 13:16:38.151959"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 5], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 13:16:38.159236"], ["updated_at", "2022-09-15 13:16:38.159236"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:42 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.4ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.2ms | Allocations: 743)
+Completed 200 OK in 25ms (Views: 3.0ms | ActiveRecord: 2.5ms | Allocations: 9939)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:44 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 0.9ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.2ms | ActiveRecord: 0.4ms | Allocations: 2530)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:45 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.7ms | Allocations: 555)
+Completed 200 OK in 8ms (Views: 2.1ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:46 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.5ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.8ms | ActiveRecord: 0.3ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:46 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 0.9ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.1ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:46 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.8ms | ActiveRecord: 0.4ms | Allocations: 2482)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:46 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.1ms | Allocations: 555)
+Completed 200 OK in 16ms (Views: 2.9ms | ActiveRecord: 0.5ms | Allocations: 2483)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:46 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.5ms | Allocations: 555)
+Completed 200 OK in 12ms (Views: 3.7ms | ActiveRecord: 0.6ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:46 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 555)
+Completed 200 OK in 11ms (Views: 2.2ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:47 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.9ms | Allocations: 555)
+Completed 200 OK in 11ms (Views: 2.4ms | ActiveRecord: 0.6ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:16:47 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.4ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 12ms (Views: 1.8ms | ActiveRecord: 0.7ms | Allocations: 2481)
+
+
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (1.2ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (1.0ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.1ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (1.1ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 13:16:52.936262"], ["updated_at", "2022-09-15 13:16:52.936262"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 13:16:52.941338"], ["updated_at", "2022-09-15 13:16:52.941338"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 13:16:52.945117"], ["updated_at", "2022-09-15 13:16:52.945117"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:16:52.978856"], ["updated_at", "2022-09-15 13:16:52.978856"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:16:52.985482"], ["updated_at", "2022-09-15 13:16:52.985482"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 8], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:16:52.992451"], ["updated_at", "2022-09-15 13:16:52.992451"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 13:16:53.003549"], ["updated_at", "2022-09-15 13:16:53.003549"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:16:53.010351"], ["updated_at", "2022-09-15 13:16:53.010351"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 7], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:16:53.017366"], ["updated_at", "2022-09-15 13:16:53.017366"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 8], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 13:16:53.023831"], ["updated_at", "2022-09-15 13:16:53.023831"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (1.2ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (1.3ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.1ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (1.1ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 13:17:23.523188"], ["updated_at", "2022-09-15 13:17:23.523188"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 13:17:23.528017"], ["updated_at", "2022-09-15 13:17:23.528017"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 13:17:23.532405"], ["updated_at", "2022-09-15 13:17:23.532405"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:17:23.565386"], ["updated_at", "2022-09-15 13:17:23.565386"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:17:23.572121"], ["updated_at", "2022-09-15 13:17:23.572121"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 11], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:17:23.579164"], ["updated_at", "2022-09-15 13:17:23.579164"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 13:17:23.589727"], ["updated_at", "2022-09-15 13:17:23.589727"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:17:23.597492"], ["updated_at", "2022-09-15 13:17:23.597492"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 10], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:17:23.603982"], ["updated_at", "2022-09-15 13:17:23.603982"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 11], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 13:17:23.610684"], ["updated_at", "2022-09-15 13:17:23.610684"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:26 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.2ms | Allocations: 743)
+Completed 200 OK in 25ms (Views: 2.0ms | ActiveRecord: 2.8ms | Allocations: 9996)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:27 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.3ms | Allocations: 555)
+Completed 200 OK in 7ms (Views: 1.7ms | ActiveRecord: 0.3ms | Allocations: 2530)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:28 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.1ms | Allocations: 555)
+Completed 200 OK in 7ms (Views: 1.7ms | ActiveRecord: 0.3ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:28 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.4ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.3ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.6ms | ActiveRecord: 0.6ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:28 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.4ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.7ms | Allocations: 555)
+Completed 200 OK in 10ms (Views: 2.5ms | ActiveRecord: 0.7ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:28 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 5.0ms | Allocations: 555)
+Completed 200 OK in 18ms (Views: 7.9ms | ActiveRecord: 0.6ms | Allocations: 2482)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:28 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.8ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 0.9ms | Allocations: 555)
+Completed 200 OK in 8ms (Views: 1.2ms | ActiveRecord: 1.1ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:28 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 6.8ms | Allocations: 555)
+Completed 200 OK in 16ms (Views: 9.4ms | ActiveRecord: 0.5ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:29 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.3ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.3ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 6.3ms | Allocations: 555)
+Completed 200 OK in 14ms (Views: 6.8ms | ActiveRecord: 0.7ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:29 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.3ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.3ms | Allocations: 555)
+Completed 200 OK in 12ms (Views: 1.9ms | ActiveRecord: 0.5ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:29 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.2ms | Allocations: 555)
+Completed 200 OK in 11ms (Views: 3.2ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:33 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 5ms (Views: 1.2ms | ActiveRecord: 0.3ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:34 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.4ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:35 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.1ms | Allocations: 555)
+Completed 200 OK in 7ms (Views: 1.4ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:35 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (1.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.1ms | Allocations: 555)
+Completed 200 OK in 8ms (Views: 1.4ms | ActiveRecord: 1.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:35 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 3.2ms | Allocations: 589)
+Completed 200 OK in 12ms (Views: 4.6ms | ActiveRecord: 0.4ms | Allocations: 2633)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:35 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.3ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.9ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.4ms | Allocations: 555)
+Completed 200 OK in 14ms (Views: 2.1ms | ActiveRecord: 1.4ms | Allocations: 2627)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:35 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 3.5ms | Allocations: 555)
+Completed 200 OK in 8ms (Views: 3.9ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:36 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.3ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 5.1ms | Allocations: 555)
+Completed 200 OK in 34ms (Views: 7.0ms | ActiveRecord: 0.6ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:36 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.1ms | Allocations: 555)
+Completed 200 OK in 12ms (Views: 1.4ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:36 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.5ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (1.4ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 13ms (Views: 1.3ms | ActiveRecord: 2.0ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:36 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.3ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 2.1ms | Allocations: 555)
+Completed 200 OK in 11ms (Views: 2.8ms | ActiveRecord: 0.6ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:17:36 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.4ms | Allocations: 555)
+Completed 200 OK in 7ms (Views: 2.0ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (1.2ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (1.2ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.1ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (1.1ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 13:21:46.209636"], ["updated_at", "2022-09-15 13:21:46.209636"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.5ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 13:21:46.214667"], ["updated_at", "2022-09-15 13:21:46.214667"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 13:21:46.218704"], ["updated_at", "2022-09-15 13:21:46.218704"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.3ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:21:46.251258"], ["updated_at", "2022-09-15 13:21:46.251258"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:21:46.258103"], ["updated_at", "2022-09-15 13:21:46.258103"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.5ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 14], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:21:46.265193"], ["updated_at", "2022-09-15 13:21:46.265193"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 13:21:46.275959"], ["updated_at", "2022-09-15 13:21:46.275959"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:21:46.282729"], ["updated_at", "2022-09-15 13:21:46.282729"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 13], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:21:46.289917"], ["updated_at", "2022-09-15 13:21:46.289917"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 14], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 13:21:46.296486"], ["updated_at", "2022-09-15 13:21:46.296486"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/missions" for ::1 at 2022-09-15 15:21:48 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.5ms | Allocations: 743)
+Completed 200 OK in 22ms (Views: 2.3ms | ActiveRecord: 2.5ms | Allocations: 9931)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:21:49 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.1ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.4ms | ActiveRecord: 0.4ms | Allocations: 2530)
+
+
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBooking Delete All (1.1ms)[0m  [1m[31mDELETE FROM "bookings"[0m
+  [1m[36mReservation Delete All (1.6ms)[0m  [1m[31mDELETE FROM "reservations"[0m
+  [1m[36mMission Delete All (0.1ms)[0m  [1m[31mDELETE FROM "missions"[0m
+  [1m[36mListing Delete All (1.1ms)[0m  [1m[31mDELETE FROM "listings"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 2], ["created_at", "2022-09-15 13:25:51.155259"], ["updated_at", "2022-09-15 13:25:51.155259"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 1], ["created_at", "2022-09-15 13:25:51.160190"], ["updated_at", "2022-09-15 13:25:51.160190"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Create (0.4ms)[0m  [1m[32mINSERT INTO "listings" ("name", "num_rooms", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", nil], ["num_rooms", 3], ["created_at", "2022-09-15 13:25:51.164070"], ["updated_at", "2022-09-15 13:25:51.164070"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["start_date", "2016-10-10"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:25:51.196678"], ["updated_at", "2022-09-15 13:25:51.196678"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:25:51.203308"], ["updated_at", "2022-09-15 13:25:51.203308"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.5ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mBooking Create (0.4ms)[0m  [1m[32mINSERT INTO "bookings" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 17], ["start_date", "2016-10-15"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:25:51.211169"], ["updated_at", "2022-09-15 13:25:51.211169"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["start_date", "2016-10-11"], ["end_date", "2016-10-13"], ["created_at", "2022-09-15 13:25:51.223390"], ["updated_at", "2022-09-15 13:25:51.223390"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["start_date", "2016-10-13"], ["end_date", "2016-10-15"], ["created_at", "2022-09-15 13:25:51.230189"], ["updated_at", "2022-09-15 13:25:51.230189"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.5ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["start_date", "2016-10-16"], ["end_date", "2016-10-20"], ["created_at", "2022-09-15 13:25:51.237089"], ["updated_at", "2022-09-15 13:25:51.237089"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mReservation Create (0.4ms)[0m  [1m[32mINSERT INTO "reservations" ("listing_id", "start_date", "end_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["listing_id", 17], ["start_date", "2016-10-15"], ["end_date", "2016-10-18"], ["created_at", "2022-09-15 13:25:51.245135"], ["updated_at", "2022-09-15 13:25:51.245135"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+Started GET "/api/missions" for ::1 at 2022-09-15 15:25:54 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.2ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.5ms | Allocations: 555)
+Completed 200 OK in 8ms (Views: 2.3ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:25:55 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.1ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.4ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:25:55 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.2ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.5ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:25:56 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.1ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.1ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 1.0ms | Allocations: 555)
+Completed 200 OK in 6ms (Views: 1.3ms | ActiveRecord: 0.4ms | Allocations: 2481)
+
+
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mListing Load (0.3ms)[0m  [1m[34mSELECT "listings".* FROM "listings" ORDER BY "listings"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mMission Create (0.7ms)[0m  [1m[32mINSERT INTO "missions" ("listing_id", "price", "mission_type", "created_at", "updated_at", "date") VALUES (?, ?, ?, ?, ?, ?)[0m  [["listing_id", 18], ["price", 200], ["mission_type", "gyu"], ["created_at", "2022-09-15 13:30:10.800385"], ["updated_at", "2022-09-15 13:30:10.800385"], ["date", "2016-10-10"]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/missions" for ::1 at 2022-09-15 15:30:17 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.2ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 6.7ms | Allocations: 3835)
+Completed 200 OK in 31ms (Views: 7.2ms | ActiveRecord: 2.9ms | Allocations: 13047)
+
+
+Started GET "/api/missions" for ::1 at 2022-09-15 15:32:33 +0200
+Processing by Api::MissionsController#index as JSON
+  [1m[36mBooking Load (0.1ms)[0m  [1m[34mSELECT "bookings".* FROM "bookings"[0m
+  ↳ app/controllers/api/missions_controller.rb:3:in `index'
+  [1m[36mMission Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."mission_type" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 16], ["mission_type", "first_checkin"], ["date", "2016-10-10"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mMission Create (0.8ms)[0m  [1m[32mINSERT INTO "missions" ("listing_id", "price", "mission_type", "created_at", "updated_at", "date") VALUES (?, ?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["price", 20], ["mission_type", "first_checkin"], ["created_at", "2022-09-15 13:32:34.020221"], ["updated_at", "2022-09-15 13:32:34.020221"], ["date", "2016-10-10"]]
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mMission Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."mission_type" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 16], ["mission_type", "last_checkout"], ["date", "2016-10-15"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mMission Create (0.6ms)[0m  [1m[32mINSERT INTO "missions" ("listing_id", "price", "mission_type", "created_at", "updated_at", "date") VALUES (?, ?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["price", 5], ["mission_type", "last_checkout"], ["created_at", "2022-09-15 13:32:34.035033"], ["updated_at", "2022-09-15 13:32:34.035033"], ["date", "2016-10-15"]]
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mMission Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."mission_type" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 16], ["mission_type", "first_checkin"], ["date", "2016-10-16"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mListing Load (0.3ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mMission Create (0.6ms)[0m  [1m[32mINSERT INTO "missions" ("listing_id", "price", "mission_type", "created_at", "updated_at", "date") VALUES (?, ?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["price", 20], ["mission_type", "first_checkin"], ["created_at", "2022-09-15 13:32:34.047545"], ["updated_at", "2022-09-15 13:32:34.047545"], ["date", "2016-10-16"]]
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mMission Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."mission_type" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 16], ["mission_type", "last_checkout"], ["date", "2016-10-20"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mMission Create (0.4ms)[0m  [1m[32mINSERT INTO "missions" ("listing_id", "price", "mission_type", "created_at", "updated_at", "date") VALUES (?, ?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["price", 5], ["mission_type", "last_checkout"], ["created_at", "2022-09-15 13:32:34.058931"], ["updated_at", "2022-09-15 13:32:34.058931"], ["date", "2016-10-20"]]
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mMission Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."mission_type" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 17], ["mission_type", "first_checkin"], ["date", "2016-10-15"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mMission Create (0.4ms)[0m  [1m[32mINSERT INTO "missions" ("listing_id", "price", "mission_type", "created_at", "updated_at", "date") VALUES (?, ?, ?, ?, ?, ?)[0m  [["listing_id", 17], ["price", 20], ["mission_type", "first_checkin"], ["created_at", "2022-09-15 13:32:34.067238"], ["updated_at", "2022-09-15 13:32:34.067238"], ["date", "2016-10-15"]]
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:5:in `block in index'
+  [1m[36mMission Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."mission_type" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 17], ["mission_type", "last_checkout"], ["date", "2016-10-20"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mListing Load (0.1ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mMission Create (0.4ms)[0m  [1m[32mINSERT INTO "missions" ("listing_id", "price", "mission_type", "created_at", "updated_at", "date") VALUES (?, ?, ?, ?, ?, ?)[0m  [["listing_id", 17], ["price", 5], ["mission_type", "last_checkout"], ["created_at", "2022-09-15 13:32:34.074597"], ["updated_at", "2022-09-15 13:32:34.074597"], ["date", "2016-10-20"]]
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:7:in `block in index'
+  [1m[36mReservation Load (0.2ms)[0m  [1m[34mSELECT "reservations".* FROM "reservations"[0m
+  ↳ app/controllers/api/missions_controller.rb:9:in `index'
+  [1m[36mMission Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 16], ["date", "2016-10-13"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mMission Create (0.7ms)[0m  [1m[32mINSERT INTO "missions" ("listing_id", "price", "mission_type", "created_at", "updated_at", "date") VALUES (?, ?, ?, ?, ?, ?)[0m  [["listing_id", 16], ["price", 10], ["mission_type", "checkout_checkin"], ["created_at", "2022-09-15 13:32:34.092984"], ["updated_at", "2022-09-15 13:32:34.092984"], ["date", "2016-10-13"]]
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mMission Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 16], ["date", "2016-10-15"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mMission Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 16], ["date", "2016-10-20"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mMission Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "missions" WHERE "missions"."listing_id" = ? AND "missions"."date" = ? LIMIT ?[0m  [["listing_id", 17], ["date", "2016-10-18"], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mListing Load (0.2ms)[0m  [1m[34mSELECT "listings".* FROM "listings" WHERE "listings"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mMission Create (1.1ms)[0m  [1m[32mINSERT INTO "missions" ("listing_id", "price", "mission_type", "created_at", "updated_at", "date") VALUES (?, ?, ?, ?, ?, ?)[0m  [["listing_id", 17], ["price", 10], ["mission_type", "checkout_checkin"], ["created_at", "2022-09-15 13:32:34.109647"], ["updated_at", "2022-09-15 13:32:34.109647"], ["date", "2016-10-18"]]
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/api/missions_controller.rb:11:in `block in index'
+  Rendering api/missions/index.json.jbuilder
+  [1m[36mMission Load (0.3ms)[0m  [1m[34mSELECT "missions".* FROM "missions"[0m
+  ↳ app/views/api/missions/index.json.jbuilder:1
+  Rendered api/missions/index.json.jbuilder (Duration: 3.0ms | Allocations: 1278)
+Completed 200 OK in 138ms (Views: 5.7ms | ActiveRecord: 23.1ms | Allocations: 46398)
+
+
